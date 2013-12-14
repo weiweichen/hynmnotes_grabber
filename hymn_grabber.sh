@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 KWFILE=keywords.txt
 GCSVFILE=stats_guitar.csv
 PCSVFILE=stats_piano.csv
@@ -8,7 +9,7 @@ if [ -d "notes/guitar" ]
 then
   echo
 else
-  mkdir -p notes/guitar
+   mkdir -p notes/guitar
 fi
 
 if [ -d "notes/piano" ]
