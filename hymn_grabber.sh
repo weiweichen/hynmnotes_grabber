@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 KWFILE=keywords.txt
 GCSVFILE=stats_guitar.csv
 PCSVFILE=stats_piano.csv
