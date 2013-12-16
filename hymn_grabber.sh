@@ -23,9 +23,9 @@ echo "keywords, filename, category, url" > $PCSVFILE
 
 cat $KWFILE | while read KEYWORD
 do
-  SEARCHKEY=`echo ${KEYWORD} | sed 's/\( \)\{1,\}/%20/g'`
-  echo ${SEARCHKEY}
-  URL="http://www.hymnal.net/en/search.php/all/all/${SEARCHKEY}"
+  SEARCHKEY=`echo ${KEYWORD} | sed 's/,/ /g' | sed 's/\./ /g' | sed 's/:/ /g'| sed 's/;/ /g' | sed 's/"/ /g'| sed 's/\( \)\{1,\}/%20/g'`
+  echo "searching ${SEARCHKEY} ......"
+	URL="http://www.hymnal.net/en/search.php/all/all/${SEARCHKEY}"
   wget -U safari -O "song.tmp" "$URL" -e robots=off
   COUNTER=0
   cat "song.tmp" | grep "hymn.php" | grep -o '<a href=['"'"'"][^"'"'"']*['"'"'"]' | sed -e 's/^<a href=['"'"'"]//' -e 's/["'"'"']$//' | while read PAGE
@@ -51,9 +51,10 @@ do
           echo "file exists"
         else
           echo "=================="
-          wget -U safari -O ./notes/$filename "$out"
+          wget -U safari -O ./notes/guitar/$filename "$out"
         fi
-        echo "$KEYWORD, $filename, $CATEGORY, $out" >> $GCSVFILE
+				NEWKEYWORD=`echo $SEARCHKEY | sed 's/%20/ /g'`
+        echo "$NEWKEYWORD, $filename, $CATEGORY, $out" >> $GCSVFILE
       done
     done 
 #####################################
@@ -69,9 +70,10 @@ do
           echo "file exists"
         else
           echo "=================="
-          wget -U safari -O ./notes/$filename "$out"
+          wget -U safari -O ./notes/piano/$filename "$out"
         fi
-        echo "$KEYWORD, $filename, $CATEGORY, $out" >> $PCSVFILE
+				NEWKEYWORD=`echo $SEARCHKEY | sed 's/%20/ /g'`
+        echo "$NEWKEYWORD, $filename, $CATEGORY, $out" >> $PCSVFILE
       done
     done 
   done
